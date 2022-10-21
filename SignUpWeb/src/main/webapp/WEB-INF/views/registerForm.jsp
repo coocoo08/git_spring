@@ -38,7 +38,7 @@ form {
 	text-align: center;
 	font-size: 16px;
 	color: red;
-	margin-bottom: 20px
+	margin-bottom: 20px;
 }
 
 label {
@@ -100,24 +100,24 @@ button {
 	<script type="text/javascript">
 		function formCheck(frm) {
 			let msg = ''
-			
-			if(frm.id.value.length < 8){
+
+			if (frm.id.value.length < 8) {
 				setMessage('id의 길이는 8자리 이상이어야 합니다.', frm.id)
 				return false;
 			}
-			
-			if(frm.pwd.value.length < 8){
+
+			if (frm.pwd.value.length < 8) {
 				setMessage('pwd의 길이는 8자리 이상이어야 합니다.', frm.pwd)
 				return false;
 			}
-			
+
 			return true;
 		}
-		
+
 		function setMessage(msg, element) {
 			document.getElementById("msg").innerHTML = `<i class="fa fa-exclamation-circle">${'${msg}'}</i>`;
-			if(element){
-				element.select();		//값을 잘못 입력되었을 때 그 요소를 선택되게하는 것임
+			if (element) {
+				element.select(); //값을 잘못 입력되었을 때 그 요소를 선택되게하는 것임
 			}
 		}
 	</script>
