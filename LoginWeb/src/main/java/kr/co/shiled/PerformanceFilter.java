@@ -33,7 +33,9 @@ public class PerformanceFilter implements Filter{
 		// 후처리 작업
 		HttpServletRequest req = (HttpServletRequest)request;
 		String method = req.getMethod();
-		System.out.println(method + "[" + req.getRequestURI() + "]" );
+		String referer = req.getHeader("Referer");
+		
+		System.out.println("[" + referer + "] --> " + method + "[" + req.getRequestURI() + "]" );
 		System.out.println("소요시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 

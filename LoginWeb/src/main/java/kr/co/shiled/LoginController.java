@@ -63,4 +63,12 @@ public class LoginController {
 	private boolean loginCheck(String id, String pwd) {
 		return "ezen".equals(id) && "0111".equals(pwd);
 	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		//세션을 종료
+		session.invalidate();
+		//홈으로 이동
+		return "redirect:/";
+	}
 }
