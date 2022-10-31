@@ -92,7 +92,7 @@ public class UserDaoImpl implements UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "INSERT INTO t_user values VALUES(?, ?, ?, ?, ?, ?, now())";
+		String sql = "INSERT INTO t_user VALUES(?, ?, ?, ?, ?, ?, now())";
 
 		try {
 			conn = ds.getConnection();

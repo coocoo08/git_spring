@@ -74,13 +74,13 @@ button {
 <title>회원가입</title>
 </head>
 <body>
-	<form action="<c:url value="/register/save/"/>" method="post"
+	<form action="<c:url value="/register/add/"/>" method="post"
 		onsubmit="return formCheck(this)">
 		<div class="title">Register</div>
 		<div id="msg" class="msg"></div>
 
 		<label>아이디</label> <input class="input-field" type="text" name="id"
-			placeholder="8~12자리의 영대소문자, 숫자 조합" autofocus> <label>비밀번호</label>
+			placeholder="5~12자리의 영대소문자, 숫자 조합" autofocus> <label>비밀번호</label>
 		<input class="input-field" type="password" name="pwd"
 			placeholder="8~12자리의 영대소문자, 숫자 조합"> <label>이름</label> <input
 			class="input-field" type="text" name="name" placeholder="이순신">
@@ -101,13 +101,13 @@ button {
 		function formCheck(frm) {
 			let msg = ''
 
-			if (frm.id.value.length < 8) {
-				setMessage('id의 길이는 8자리 이상이어야 합니다.', frm.id)
+			if (frm.id.value.length < 5) {
+				setMessage('id의 길이는 5자리 이상이어야 합니다.', frm.id)
 				return false;
 			}
 
-			if (frm.pwd.value.length < 8) {
-				setMessage('pwd의 길이는 8자리 이상이어야 합니다.', frm.pwd)
+			if (frm.pwd.value.length < 5) {
+				setMessage('pwd의 길이는 5자리 이상이어야 합니다.', frm.pwd)
 				return false;
 			}
 

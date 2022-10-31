@@ -17,7 +17,7 @@ public class User {
 	}
 
 	public User(String id, String pwd, String name, String email, Date birth, String sns, Date reg_date) {
-		super();
+		//super();
 		this.id = id;
 		this.pwd = pwd;
 		this.name = name;
