@@ -30,17 +30,17 @@ public class DMLTest {
 		assertTrue(conn != null);
 	}
 	
-<<<<<<< HEAD
+
 	//@Test
-	public void insertUserTest() throws SQLException {
+	public void insertUserTest1() throws SQLException {
 		User user = new User("ezen", "0111", "ezen student", "ezen@gmail.com", new Date(), "facebook", new Date());
-		deleteAll();
-		int rowCnt = insertUser(user);
+		deleteAll1();
+		int rowCnt = insertUser1(user);
 		
 		assertTrue(rowCnt==1);
 	}
 	
-	private void deleteAll() throws SQLException {
+	private void deleteAll1() throws SQLException {
 		Connection conn = ds.getConnection();
 		String sql = "delete from t_user";
 		
@@ -49,7 +49,7 @@ public class DMLTest {
 	}
 
 	//사용자 정보를 t_user 테이블에 저장하는 메서드
-	public int insertUser(User user) throws SQLException {
+	public int insertUser1(User user) throws SQLException {
 		Connection conn = ds.getConnection();
 		
 		// 입력값에 사용된 물음표(?)를 인파라미터라고 함.
@@ -72,16 +72,16 @@ public class DMLTest {
 	}
 	
 	//@Test
-	public void selectUserTest() throws SQLException {
-		deleteAll();
+	public void selectUserTest1() throws SQLException {
+		deleteAll1();
 		User user = new User("ezen", "0111", "ezen student", "ezen@gmail.com", new Date(), "facebook", new Date());
-		int rowCnt = insertUser(user);
-		User user2 = selectUser("ezen");
+		int rowCnt = insertUser1(user);
+		User user2 = selectUser1("ezen");
 		
 		assertTrue(user.getId().equals("ezen"));
 	}
 	
-	public User selectUser(String id) throws SQLException {
+	public User selectUser1(String id) throws SQLException {
 		
 		Connection conn = ds.getConnection();
 		
@@ -107,18 +107,18 @@ public class DMLTest {
 	
 	@Test
 	public void deleteUserTest() throws SQLException {
-		deleteAll();
+		deleteAll1();
 		int rowCnt = deleteUser("ezen4");
 		assertTrue(rowCnt == 0);
 		
 		User user = new User("ezen", "0111", "ezen2", "ezen@gmail.com", new Date(), "facebook", new Date());
-		rowCnt = insertUser(user);
+		rowCnt = insertUser1(user);
 		assertTrue(rowCnt == 1);
 		
 		deleteUser(user.getId());
 		assertTrue(rowCnt == 1);
 		
-		assertTrue(selectUser(user.getId())==null);
+		assertTrue(selectUser1(user.getId())==null);
 	}
 	
 	public int deleteUser(String id) throws SQLException {
@@ -136,9 +136,9 @@ public class DMLTest {
 	
 	@Test
 	public void updateUserTest() throws SQLException {
-		deleteAll();
+		deleteAll1();
 		User user = new User("ezen5", "0111", "ezen2", "ezen@gmail.com", new Date(), "facebook", new Date());
-		int rowCnt = insertUser(user);
+		int rowCnt = insertUser1(user);
 		assertTrue(rowCnt == 1);
 
 		user.setPwd("0112");
@@ -179,12 +179,12 @@ public class DMLTest {
 		
 		int rowCnt = pstmt.executeUpdate();
 		return rowCnt;
-=======
+	}
 	@Test
 	public void insertUserTest() throws SQLException {
 		User user = new User("ezen", "0111", "ezen student", "ezen@gmail.com", new Date(), "facebook", new Date());
-		deleteAll();
-		int rowCnt = insertUser(user);
+		deleteAll1();
+		int rowCnt = insertUser1(user);
 		
 		assertTrue(rowCnt==1);
 	}
@@ -217,10 +217,10 @@ public class DMLTest {
 	
 	@Test
 	public void selectUserTest() throws SQLException {
-		deleteAll();
+		deleteAll1();
 		User user = new User("ezen", "0111", "ezen student", "ezen@gmail.com", new Date(), "facebook", new Date());
-		int rowCnt = insertUser(user);
-		User user2 = selectUser("ezen");
+		int rowCnt = insertUser1(user);
+		User user2 = selectUser1("ezen");
 		
 		assertTrue(user.getId().equals("ezen"));
 	}
@@ -248,6 +248,6 @@ public class DMLTest {
 		}
 		return null;
 		
->>>>>>> refs/remotes/origin/main
+
 	}
 }
