@@ -39,14 +39,15 @@ class MyClass {
 // 보조기능
 class MyAdvice {
 	
-	Pattern p = Pattern.compile("e.*");
+	Pattern p = Pattern.compile("e.*");		//메서드 이름이 a로 시작하는 것만 골라서 적용
 	
 	boolean matches(Method m) {
-		Matcher matcher = p.matcher(m.getName());
+		Matcher matcher = p.matcher(m.getName());		//패턴에 맞는 것만 취해서 그 핵심기능에만 보조기능이 들어가게 함
 		return matcher.matches();
 	}
 	
 	void invoke(Method m, Object obj, Object...args) throws Exception {
+		// 핵심기능에 Transactional 어노테이션이 설정되어 있는 경우에만 before를 출력
 		//if (matches(m)) {
 		if (m.getAnnotation(Transactional.class) != null) {
 			System.out.println("[이젠 brfore] { ");						
