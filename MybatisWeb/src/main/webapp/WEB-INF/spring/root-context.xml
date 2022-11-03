@@ -19,6 +19,10 @@
 		<property name="mapperLocations" value="classpath:mapper/boardMapper.xml"/>
 	</bean>
 	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+	
 	<context:component-scan base-package="kr.co.heart" />
 		
 </beans>
