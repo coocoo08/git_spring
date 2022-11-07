@@ -5,4 +5,39 @@
 
 <mapper namespace="kr.co.heart.dao.BoardMapper">
 	
+	<sql id="selectFromBoard">
+		SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
+		FROM t_board
+	</sql>
+	
+	<select id="select" parameterType="int" resultType="BoardDto">
+		<include refid="selectFromBoard"/>
+		where bno = #{bno}
+	</select>
+	
+	<delete id="deleteAll">
+		delete from t_board
+	</delete>
+	
+	<insert id="insert" parameterType="BoardDto">
+		INSERT INTO public.t_board
+		(title, content, writer)
+		VALUES(#{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="count" resultType="int">
+		select count(*) from t_board
+	</select>
+	
+	<select id="selectPage" parameterType="map" resultType="BoardDto">
+		<include refid="selectFromBoard"/>
+		order by reg_date desc, bno desc
+		limit #{pageSize} offset #{offset};
+	</select>
+	
+	
+	
+	
+	
+	
 </mapper>
