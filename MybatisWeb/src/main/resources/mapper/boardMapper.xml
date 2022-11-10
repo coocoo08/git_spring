@@ -19,8 +19,19 @@
 		delete from t_board
 	</delete>
 	
+	<delete id="delete" parameterType="map">
+		DELETE FROM t_board
+		WHERE bno = #{bno}
+		AND writer = #{writer}
+	</delete>
+	
+	<delete id="deleteForAdmin"> 
+		DELETE FROM t_board
+		WHERE bno = #{bno}
+	</delete>
+	
 	<insert id="insert" parameterType="BoardDto">
-		INSERT INTO public.t_board
+		INSERT INTO t_board
 		(title, content, writer)
 		VALUES(#{title}, #{content}, #{writer})
 	</insert>
@@ -29,15 +40,39 @@
 		select count(*) from t_board
 	</select>
 	
+	<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
+		select count(*) 
+		from t_board
+		where true
+		and title like concat('%', '#{keyword}', '%') 
+	</select>
+	
+	<select id="searchSelectPage" parameterType="SearchItem" resultType="BoardDto">
+		select bno, title, writer, view_cnt, comment_cnt, reg_date 
+		from t_board
+		where true
+		and title like concat('%', '#{keyword}', '%') 
+		order by reg_date desc, bno desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
 	<select id="selectPage" parameterType="map" resultType="BoardDto">
 		<include refid="selectFromBoard"/>
 		order by reg_date desc, bno desc
-		limit #{pageSize} offset #{offset};
+		limit #{pageSize} offset #{offset}
 	</select>
 	
+	<update id="increaseViewCnt" parameterType="int">
+		UPDATE t_board
+		SET view_cnt = view_cnt + 1
+		WHERE bno = #{bno}
+	</update>
 	
-	
-	
+	<update id="update" parameterType="BoardDto">
+		UPDATE t_board
+		SET title=#{title}, content=#{content}, writer= #{writer}
+		WHERE bno= #{bno}
+	</update>
 	
 	
 </mapper>

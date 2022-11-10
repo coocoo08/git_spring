@@ -24,4 +24,28 @@ public class BoardServiceImpl implements BoardService{
 	public int getCount() throws Exception {
 		return boardDao.count();
 	}
+
+	@Override
+	public BoardDto read(Integer bno) throws Exception {
+		BoardDto boardDto = boardDao.select(bno);
+		//비즈니스 로직 추가(조회수 증가)
+		boardDao.increaseViewCnt(bno);
+		return boardDto;
+	}
+
+	@Override
+	public int remove(Integer bno, String writer) throws Exception {
+		return boardDao.delete(bno, writer);
+	}
+
+	@Override
+	public int write(BoardDto boardDto) throws Exception {
+		return boardDao.insert(boardDto);
+	}
+
+	@Override
+	public int modify(BoardDto boardDto) throws Exception {
+		return boardDao.update(boardDto);
+	}
+	
 }

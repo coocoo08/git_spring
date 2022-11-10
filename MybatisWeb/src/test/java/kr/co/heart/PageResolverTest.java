@@ -40,4 +40,15 @@ public class PageResolverTest {
 		assertTrue(pr.getBeginPage() == 21);
 		assertTrue(pr.getEndPage() == 26);
 	}
+	
+	@Test
+	public void test4() {
+		PageResolver pr = new PageResolver(255, 10);
+		pr.print();
+		System.err.println("pr = " + pr);
+		System.out.println();
+		
+		assertTrue(pr.getBeginPage() == 1);
+		assertTrue(pr.getEndPage() == 10);
+	}
 }

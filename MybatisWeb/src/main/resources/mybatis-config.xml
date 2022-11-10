@@ -3,8 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
   
-<configuration>
-	<typeAliases>
-		<typeAlias alias="BoardDto" type="kr.co.heart.domain.BoardDto"/>
-	</typeAliases>
-</configuration>
+  <configuration>
+     <typeAliases>
+        <typeAlias alias="BoardDto" type="kr.co.heart.domain.BoardDto" />
+        <typeAlias alias="SearchItem" type="kr.co.heart.domain.SearchItem" />
+     </typeAliases>
+  </configuration>

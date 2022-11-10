@@ -20,7 +20,7 @@ public class BoardDaoImplTest2 {
 	public void insertDummydateTest() throws Exception {
 		boardDao.deleteAll();
 		
-		for (int i = 1; i <= 50; i++) {
+		for (int i = 1; i <= 250; i++) {
 			BoardDto boardDto = new BoardDto("Pioneering" + i, "취업 준비" + i, "ezen");
 			boardDao.insert(boardDto);
 		}
