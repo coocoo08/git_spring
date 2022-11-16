@@ -88,8 +88,41 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){		/* main */
+			
+			let bno = 302
+			
+			let showList = function(bno) {
+				$.ajax({
+					type : 'GET',		//요청 메서드
+					url : '/heart/comments?bno='+bno,		// 요청 URI
+					success : function(result) {			// 서버로부터 응답이 도착하면 호출될 함수
+						$("#commentList").html(toHtml(result))		// result는 서버가 전송한 데이터
+					},
+					error : function() { alert("error")}	// 에러가 발생할 때, 호출될 함수
+				})
+			}
+		
+			let toHtml = function(comments) {
+				let tmp = "<ul>"
+				comments.forEach(function(comment) {
+					tmp += '<li data-cno=' + comment.cno
+					tmp += ' data-bno=' + comment.bno
+					tmp += ' data-pcno=' + comment.pcno + '>'
+					tmp += ' commenter=<span class="commenter">' + comment.commenter + '</span>'
+					tmp += ' comment=<span class="comment">' + comment.comment + '</span>'
+
+					tmp += '</li>'
+				})
+				return tmp += "</ul>"
+			}
+			
+			$("#sendBtn").click(function() {
+				showList(bno)
+			})
+			
+			
 			$("#listBtn").on("click", function(){
-				location.href = "<c:url value='/board/list?page=${page}&pageSize=${pageSize}'/>";
+				location.href = "<c:url value='/board/list${searchItem.queryString}'/>";
 			})
 			
 			$("#removeBtn").on("click", function() {
@@ -97,7 +130,7 @@
 					return;
 				}
 				let form = $("#form")
-				form.attr("action","<c:url value='/board/remove?page=${page}&pageSize=${pageSize}'/>")
+				form.attr("action","<c:url value='/board/remove${searchItem.queryString}'/>")
 				form.attr("method", "post")
 				form.submit()
 			})
@@ -139,7 +172,7 @@
 					return;
 				}
 				//2. 수정상태이면 수정된 내용을 서버로 전송
-				form.attr("action", "<c:url value='/board/modify?page=${page}&pageSize=${pageSize}'/>")
+				form.attr("action", "<c:url value='/board/modify${searchItem.queryString}'/>")
 				form.attr("method", "post")
 				if (formCheck()) {
 					form.submit();
@@ -174,6 +207,10 @@
 			
 			<button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i>목록</button>
 		</form>
+		
+		<button id="sendBtn" type="button">SEND</button>
+		<div id="commentList"></div>
+		
 	</div>
 </body>
 </html>

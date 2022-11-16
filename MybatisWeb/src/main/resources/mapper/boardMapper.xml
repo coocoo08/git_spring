@@ -11,7 +11,7 @@
 	</sql>
 	
 	<select id="select" parameterType="int" resultType="BoardDto">
-		<include refid="selectFromBoard"/>
+		<include refid="selectFromBoard" />
 		where bno = #{bno}
 	</select>
 	
@@ -20,59 +20,76 @@
 	</delete>
 	
 	<delete id="delete" parameterType="map">
-		DELETE FROM t_board
-		WHERE bno = #{bno}
-		AND writer = #{writer}
+		delete from t_board where bno = #{bno} and writer = #{writer}
 	</delete>
-	
-	<delete id="deleteForAdmin"> 
-		DELETE FROM t_board
-		WHERE bno = #{bno}
+
+	<delete id="deleteForAdmin">
+		delete from t_board where bno = #{bno}
 	</delete>
 	
 	<insert id="insert" parameterType="BoardDto">
 		INSERT INTO t_board
-		(title, content, writer)
-		VALUES(#{title}, #{content}, #{writer})
+			(title, content, writer)
+		VALUES
+			(#{title}, #{content}, #{writer})
 	</insert>
 	
 	<select id="count" resultType="int">
 		select count(*) from t_board
 	</select>
 	
+	<sql id="searchCondition">
+		<choose>
+			<when test='option=="T"'>
+				AND title LIKE concat('%', #{keyword}, '%')
+			</when>
+			<when test='option=="W"'>
+				AND writer LIKE concat('%', #{keyword}, '%')
+			</when>
+			<otherwise>
+				AND (title LIKE concat('%', #{keyword}, '%')
+				OR content LIKE concat('%', #{keyword}, '%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
 	<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
-		select count(*) 
-		from t_board
-		where true
-		and title like concat('%', '#{keyword}', '%') 
+		select count(*)
+		from t_board 
+		where true 
+		<include refid="searchCondition" />
 	</select>
 	
-	<select id="searchSelectPage" parameterType="SearchItem" resultType="BoardDto">
-		select bno, title, writer, view_cnt, comment_cnt, reg_date 
-		from t_board
-		where true
-		and title like concat('%', '#{keyword}', '%') 
+	<select id="selectPage" parameterType="map" resultType="BoardDto">
+		<include refid="selectFromBoard" />
 		order by reg_date desc, bno desc
 		limit #{pageSize} offset #{offset}
 	</select>
 	
-	<select id="selectPage" parameterType="map" resultType="BoardDto">
-		<include refid="selectFromBoard"/>
+	<select id="searchSelectPage" parameterType="SearchItem" resultType="BoardDto">
+		select bno , title, content , writer , view_cnt , comment_cnt , reg_date 
+		from t_board 
+		where true 
+		<include refid="searchCondition" />
 		order by reg_date desc, bno desc
 		limit #{pageSize} offset #{offset}
 	</select>
 	
 	<update id="increaseViewCnt" parameterType="int">
-		UPDATE t_board
-		SET view_cnt = view_cnt + 1
-		WHERE bno = #{bno}
+		update t_board 
+		set view_cnt = view_cnt + 1
+		where bno = #{bno}
 	</update>
 	
 	<update id="update" parameterType="BoardDto">
-		UPDATE t_board
-		SET title=#{title}, content=#{content}, writer= #{writer}
-		WHERE bno= #{bno}
+		update t_board
+		SET title=#{title}, content=#{content}, up_date=now()
+		WHERE bno=#{bno} and writer=#{writer}
 	</update>
 	
-	
+	<update id="updateCommentCnt" parameterType="map" >
+		update t_board 
+		set comment_cnt = comment_cnt + #{cnt}
+		where bno = #{bno}
+	</update>
 </mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.co.heart.dao.CommentMapper">
+
+	<select id="selectAll" parameterType="int" resultType="CommentDto">
+		select cno , bno , pcno , "comment" , commenter , reg_date , up_date 
+		from t_comment
+		where bno = #{bno}
+		order by reg_date desc, cno 
+	</select>
+
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM t_comment
+		where bno = #{bno}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		delete from t_comment where cno = #{cno} and commenter = #{commenter}
+	</delete>
+	
+</mapper>

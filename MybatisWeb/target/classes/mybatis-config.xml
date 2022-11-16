@@ -7,5 +7,6 @@
      <typeAliases>
         <typeAlias alias="BoardDto" type="kr.co.heart.domain.BoardDto" />
         <typeAlias alias="SearchItem" type="kr.co.heart.domain.SearchItem" />
+        <typeAlias alias="CommentDto" type="kr.co.heart.domain.CommentDto" />
      </typeAliases>
   </configuration>

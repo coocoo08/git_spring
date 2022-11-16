@@ -1,8 +1,6 @@
 package kr.co.heart.Controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,11 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.heart.domain.BoardDto;
 import kr.co.heart.domain.PageResolver;
+import kr.co.heart.domain.SearchItem;
 import kr.co.heart.service.BoardService;
 
 @Controller
@@ -102,14 +100,12 @@ public class BoardController {
 	}
 
 	@GetMapping("/read")
-	public String read(Integer bno, Integer page, Integer pageSize, Model model) {
+	public String read(Integer bno, SearchItem sc, Model model) {
 		try {
 			BoardDto boardDto = boardService.read(bno);
 			// model.addAttribute("boardDto", boardDto); //아래 문장과 동일
 			model.addAttribute(boardDto);
 
-			model.addAttribute("page", page);
-			model.addAttribute("pageSize", pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/board/list";
@@ -118,8 +114,8 @@ public class BoardController {
 	}
 
 	@GetMapping("/list")
-	public String list(@RequestParam(defaultValue = "1") Integer page,
-			@RequestParam(defaultValue = "10") Integer pageSize, Model model, HttpServletRequest request) {
+	public String list(SearchItem sc, 
+			Model model, HttpServletRequest request) {
 
 		if (!loginCheck(request)) {
 			return "redirect:/login/login?toURL=" + request.getRequestURL();
@@ -129,26 +125,14 @@ public class BoardController {
 //			if (page==null) {page=1;}
 //			if (pagrSize==null) {pagrSize=10;}
 
-			int totalCnt = boardService.getCount();
+			int totalCnt = boardService.getSearchResultCnt(sc);
 			model.addAttribute("totalCnt", totalCnt);
 
-			PageResolver pageResolver = new PageResolver(totalCnt, page, pageSize);
-			if (page < 0 || page > pageResolver.getTotalCnt()) {
-				page = 1;
-			}
-			if (pageSize < 0 || pageSize > 50) {
-				pageSize = 10;
-			}
-			Map map = new HashMap();
-			map.put("offset", (page - 1) * pageSize);
-			map.put("pageSize", pageSize);
+			PageResolver pageResolver = new PageResolver(totalCnt, sc);
 
-			List<BoardDto> list = boardService.getPage(map);
+			List<BoardDto> list = boardService.getsearchResultPage(sc);
 			model.addAttribute("list", list);
 			model.addAttribute("pr", pageResolver);
-
-			model.addAttribute("page", page);
-			model.addAttribute("pageSize", pageSize);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.heart.dao.BoardDao;
 import kr.co.heart.domain.BoardDto;
+import kr.co.heart.domain.SearchItem;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -46,6 +47,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int modify(BoardDto boardDto) throws Exception {
 		return boardDao.update(boardDto);
+	}
+
+	@Override
+	public int getSearchResultCnt(SearchItem sc) throws Exception {
+		return boardDao.searchResultCnt(sc);
+	}
+
+	@Override
+	public List<BoardDto> getsearchResultPage(SearchItem sc) throws Exception {
+		return boardDao.searchSelectPage(sc);
 	}
 	
 }
