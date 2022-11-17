@@ -34,8 +34,12 @@ public class CommentDaoImpl implements CommentDao {
 		Map map = new HashMap();
 		map.put("cno", cno);
 		map.put("commenter", commenter);
-		
 		return session.delete(namespace+"delete", map);
+	}
+
+	@Override
+	public int insert(CommentDto commentDto) throws Exception {
+		return session.insert(namespace + "insert", commentDto);
 	}
 
 }

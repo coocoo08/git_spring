@@ -10,4 +10,6 @@ public interface CommentService {
 
 	int remove(Integer cno, Integer bno, String commenter) throws Exception;
 
+	int write(CommentDto dto) throws Exception;
+
 }
