@@ -28,4 +28,11 @@
 			(#{bno}, #{pcno}, #{comment}, #{commenter}, now(), now())
 	</insert>
 	
+	<update id="update" parameterType="CommentDto">
+		UPDATE public.t_comment
+		SET comment = #{comment}, up_date = now()
+		WHERE cno = #{cno}
+		and commenter = #{commenter}
+	</update>
+
 </mapper>

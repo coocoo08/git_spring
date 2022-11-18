@@ -12,4 +12,6 @@ public interface CommentService {
 
 	int write(CommentDto dto) throws Exception;
 
+	int modify(CommentDto dto) throws Exception;
+
 }
